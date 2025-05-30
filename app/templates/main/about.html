@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h1 class="h3 mb-0">About Flask Blog</h1>
+            </div>
+            <div class="card-body">
+                <h2 class="h4 mb-3">A Full-Featured Web Application</h2>
+                
+                <p>Flask Blog is a comprehensive web application built using the Flask framework. 
+                   This project demonstrates a wide range of web development concepts and features.</p>
+                
+                <h3 class="h5 mt-4">Key Features</h3>
+                <ul class="list-group list-group-flush mb-4">
+                    <li class="list-group-item">
+                        <i class="fas fa-user-shield me-2 text-primary"></i>
+                        <strong>User Authentication</strong> - Secure registration and login system
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-database me-2 text-primary"></i>
+                        <strong>Database Integration</strong> - SQLAlchemy ORM with relationships
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-edit me-2 text-primary"></i>
+                        <strong>Content Management</strong> - Create, read, update, and delete posts
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-comments me-2 text-primary"></i>
+                        <strong>Comments</strong> - Interact with posts through comments
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-tags me-2 text-primary"></i>
+                        <strong>Tags</strong> - Categorize and filter content
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-upload me-2 text-primary"></i>
+                        <strong>File Uploads</strong> - Upload and manage images
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-search me-2 text-primary"></i>
+                        <strong>Search</strong> - Find content across the application
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-shield-alt me-2 text-primary"></i>
+                        <strong>Security</strong> - Password hashing, CSRF protection, and secure sessions
+                    </li>
+                </ul>
+                
+                <h3 class="h5">Technologies Used</h3>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-header bg-light">
+                                <h4 class="h6 mb-0">Backend</h4>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Python 3.x</li>
+                                <li class="list-group-item">Flask Framework</li>
+                                <li class="list-group-item">SQLAlchemy ORM</li>
+                                <li class="list-group-item">Flask-Login</li>
+                                <li class="list-group-item">Flask-WTF</li>
+                                <li class="list-group-item">Werkzeug</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-header bg-light">
+                                <h4 class="h6 mb-0">Frontend</h4>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">HTML5</li>
+                                <li class="list-group-item">CSS3</li>
+                                <li class="list-group-item">Bootstrap 5</li>
+                                <li class="list-group-item">JavaScript</li>
+                                <li class="list-group-item">Jinja2 Templates</li>
+                                <li class="list-group-item">Font Awesome</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('main.home') }}" class="btn btn-primary">
+                        <i class="fas fa-home me-2"></i> Return to Home
+                    </a>
+                    {% if not current_user.is_authenticated %}
+                        <a href="{{ url_for('auth.register') }}" class="btn btn-success ms-2">
+                            <i class="fas fa-user-plus me-2"></i> Register Now
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

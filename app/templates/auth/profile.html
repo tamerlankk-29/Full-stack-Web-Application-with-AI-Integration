@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h2 class="h4 mb-0">Profile Information</h2>
+            </div>
+            <div class="card-body text-center">
+                <img src="{{ url_for('static', filename='uploads/profile_pics/' + current_user.profile_image) }}" 
+                     alt="Profile Picture" class="rounded-circle img-fluid mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                
+                <h3 class="h5">{{ current_user.get_full_name() }}</h3>
+                <p class="text-muted">@{{ current_user.username }}</p>
+                
+                {% if current_user.about_me %}
+                    <p>{{ current_user.about_me }}</p>
+                {% endif %}
+                
+                <div class="small text-muted">
+                    <div>Member since: {{ current_user.created_at.strftime('%Y-%m-%d') }}</div>
+                    <div>Last seen: {{ current_user.last_seen.strftime('%Y-%m-%d %H:%M') }}</div>
+                </div>
+                
+                <hr>
+                
+                <h4 class="h6 mb-3">Update Profile Picture</h4>
+                <form method="POST" action="{{ url_for('auth.update_profile_picture') }}" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="mb-3">
+                        <input class="form-control form-control-sm" type="file" name="profile_picture" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Upload New Picture</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h2 class="h4 mb-0">Activity</h2>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('posts.user_posts', username=current_user.username) }}" class="btn btn-outline-primary">
+                        <i class="fas fa-list me-2"></i> My Posts
+                    </a>
+                    <a href="{{ url_for('posts.new_post') }}" class="btn btn-outline-success">
+                        <i class="fas fa-edit me-2"></i> Create New Post
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2 class="h4 mb-0">Edit Profile</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('auth.profile') }}">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.username.label(class="form-label") }}
+                        {% if form.username.errors %}
+                            {{ form.username(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.username.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.username(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.email.label(class="form-label") }}
+                        {% if form.email.errors %}
+                            {{ form.email(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.email(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.first_name.label(class="form-label") }}
+                            {% if form.first_name.errors %}
+                                {{ form.first_name(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.first_name.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.first_name(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            {{ form.last_name.label(class="form-label") }}
+                            {% if form.last_name.errors %}
+                                {{ form.last_name(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.last_name.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.last_name(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.about_me.label(class="form-label") }}
+                        {% if form.about_me.errors %}
+                            {{ form.about_me(class="form-control is-invalid", rows=4) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.about_me.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.about_me(class="form-control", rows=4) }}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

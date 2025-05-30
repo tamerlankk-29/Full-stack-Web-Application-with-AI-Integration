@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h1 class="h3 mb-0">Search Posts</h1>
+            </div>
+            <div class="card-body">
+                <form method="GET" action="{{ url_for('main.search') }}" class="mb-4">
+                    <div class="input-group">
+                        <input type="text" name="query" class="form-control" placeholder="Search for posts..." 
+                               value="{{ request.args.get('query', '') }}" required>
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                    <small class="form-text text-muted">
+                        Search in post titles, content, and tags
+                    </small>
+                </form>
+                
+                <div class="text-center">
+                    <p>Enter a search term above to find posts.</p>
+                    <p>You can search by title, content, or tags.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

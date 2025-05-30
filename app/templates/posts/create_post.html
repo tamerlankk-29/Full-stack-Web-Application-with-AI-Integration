@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h1 class="h3 mb-0">{{ legend }}</h1>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.title.label(class="form-label") }}
+                        {% if form.title.errors %}
+                            {{ form.title(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.title.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.title(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.content.label(class="form-label") }}
+                        {% if form.content.errors %}
+                            {{ form.content(class="form-control is-invalid", rows=10) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.content.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.content(class="form-control", rows=10) }}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.tags.label(class="form-label") }}
+                        {% if form.tags.errors %}
+                            {{ form.tags(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.tags.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.tags(class="form-control") }}
+                            <small class="form-text text-muted">
+                                Separate tags with commas (e.g., flask, python, web)
+                            </small>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.image.label(class="form-label") }}
+                        {{ form.image(class="form-control") }}
+                        {% if form.image.errors %}
+                            {% for error in form.image.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        
+                        {% if request.endpoint == 'posts.update_post' and post.image_file %}
+                            <div class="mt-2">
+                                <p>Current image:</p>
+                                <img src="{{ url_for('static', filename='uploads/' + post.image_file) }}" 
+                                     alt="Current post image" class="img-thumbnail" style="max-height: 200px;">
+                                <p class="small text-muted mt-1">Upload a new image to replace the current one.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        {{ form.published(class="form-check-input") }}
+                        {{ form.published.label(class="form-check-label") }}
+                        <small class="form-text text-muted d-block">
+                            Uncheck to save as draft (only visible to you)
+                        </small>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('main.home') }}" class="btn btn-outline-secondary">Cancel</a>
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Simple preview of post content as you type (optional enhancement)
+    document.addEventListener('DOMContentLoaded', function() {
+        const contentField = document.getElementById('content');
+        if (contentField) {
+            contentField.addEventListener('input', function() {
+                // Add any client-side preview functionality here if desired
+            });
+        }
+    });
+</script>
+{% endblock %}
