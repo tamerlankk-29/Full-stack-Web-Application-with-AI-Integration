@@ -1147,10 +1147,6 @@ The project is a full-featured blog platform with artificial intelligence integr
 - **Modular Architecture**: Using Blueprints and OOP.
 
 
-### Screenshots of Key Pages
-
-
-[Screenshots of the main application pages should be placed here]
 
 
 ### Conclusion
